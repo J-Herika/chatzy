@@ -1,9 +1,8 @@
 package com.chat_app.chatzy.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 public class Message {
@@ -12,16 +11,25 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
     String message;
+    String sender;
+    LocalDateTime timeStamp;
 
     public Message() {}
 
-    public Message(String message){
+    public Message(String message,String sender){
         this.message = message;
+        this.sender = sender;
+    }
+
+    @PrePersist
+    public void setTIme(){
+        this.timeStamp = LocalDateTime.now();
     }
 
 
-    public String getMessage() {return message;}
+    public String getMessage() {return this.message;}
     public void setMessage(String message) {this.message = message;}
 
-    public long getId() {return id;}
+    public String getSender(){ return this.sender;}
+    public long getId() {return this.id;}
 }
