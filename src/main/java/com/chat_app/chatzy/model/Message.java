@@ -10,15 +10,15 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
+    long senderID;
     String message;
-    String sender;
     LocalDateTime timeStamp;
 
     public Message() {}
 
-    public Message(String message,String sender){
+    public Message(String message,long senderID){
         this.message = message;
-        this.sender = sender;
+        this.senderID = senderID;
     }
 
     @PrePersist
@@ -30,6 +30,6 @@ public class Message {
     public String getMessage() {return this.message;}
     public void setMessage(String message) {this.message = message;}
 
-    public String getSender(){ return this.sender;}
+    public long getSenderID(){ return this.senderID;}
     public long getId() {return this.id;}
 }
