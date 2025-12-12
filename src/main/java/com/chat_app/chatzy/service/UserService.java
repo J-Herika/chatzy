@@ -22,11 +22,12 @@ public class UserService {
                 map( user -> new UserDTO(user.getId(), user.getUsername())).toList();
     }
 
-    public void createUser(@RequestBody User newUser){
+    public UserDTO createUser(@RequestBody User newUser){
         if(newUser.getUsername() == null || newUser.getUsername().trim().isEmpty()){
             throw new IllegalArgumentException("Username cannot be empty");
         }
-        userRepo.save(newUser);
+        User nUser = userRepo.save(newUser);
+        return new UserDTO(nUser.getId(),nUser.getUsername());
     }
 
 }
