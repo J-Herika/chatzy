@@ -22,13 +22,15 @@ public class MessageService {
     }
 
 //    Messages API functions
+
     public List<MessageDTO> getMessages(){
-        return messageRepo.findAll().stream().
+        List<Message> allMessages = messageRepo.findAll();
+        return allMessages.stream().
                 map( message -> new MessageDTO(message.getId(), message.getMessage(),message.getSenderID())).toList();
     }
 
     public void sendMessage(@RequestBody Message message){
-        if(message.getMessage() == null || !message.getMessage().trim().isEmpty()){
+        if(message.getMessage() == null || message.getMessage().trim().isEmpty()){
             throw new IllegalArgumentException("You cant send an empty message.");
         } else if (!userRepo.existsById(message.getSenderID())) {
             throw new IllegalArgumentException("username not found please create one.");

@@ -9,16 +9,18 @@ public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
-    long senderID;
-    String message;
-    LocalDateTime timeStamp;
+    private long id;
+    private long senderID;
+    private long receiverID;
+    private String message;
+    private LocalDateTime timeStamp;
 
     public Message() {}
 
-    public Message(String message,long senderID){
+    public Message(String message,long senderID,long receiverID){
         this.message = message;
         this.senderID = senderID;
+        this.receiverID = receiverID;
     }
 
     @PrePersist

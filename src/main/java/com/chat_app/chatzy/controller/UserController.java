@@ -3,12 +3,15 @@ package com.chat_app.chatzy.controller;
 import com.chat_app.chatzy.dto.UserDTO;
 import com.chat_app.chatzy.model.User;
 import com.chat_app.chatzy.service.UserService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RestController
 public class UserController {
 
     private UserService userService;
@@ -17,12 +20,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/signin")
     public List<UserDTO> getUsers(){
         return userService.getUsers();
     }
 
-    @PostMapping
+    @PostMapping("/signin")
     public UserDTO createUser(@RequestBody User newUser){
         return userService.createUser(newUser);
     }
