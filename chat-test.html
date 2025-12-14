@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Debugger</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        #log { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; background: #f9f9f9; }
+        .message { border-bottom: 1px solid #eee; padding: 5px; }
+    </style>
+</head>
+<body>
+<h2>🔴 Live Chat Debugger</h2>
+
+<div>
+    <label>My User ID:</label>
+    <label for="myId"></label><input type="text" id="myId" value="1" placeholder="Enter ID (e.g. 1)">
+    <button onclick="connect()">Connect & Subscribe</button>
+</div>
+<hr/>
+<div id="log"></div>
+
+<script type="text/javascript">
+    let stompClient = null;
+
+    function connect() {
+        const userId = document.getElementById("myId").value;
+        const socket = new SockJS('http://localhost:8080/ws');
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, function (frame) {
+            log("✅ Connected to Server");
+
+            // IMPORTANT: This is the 'Subscribe' step you were missing!
+            // We listen to /user/{id} based on the input box
+            const topic = '/user/' + userId;
+
+            stompClient.subscribe(topic, function (messageOutput) {
+                const msg = JSON.parse(messageOutput.body);
+                log("📩 RECEIVED MESSAGE: " + msg.message + " (from Sender " + msg.senderId + ")");
+            });
+
+            log("🎧 Listening on channel: " + topic);
+        }, function(error) {
+            log("❌ Error: " + error);
+        });
+    }
+
+    function log(message) {
+        const logDiv = document.getElementById("log");
+        logDiv.innerHTML += "<div class='message'>" + message + "</div>";
+        logDiv.scrollTop = logDiv.scrollHeight; // Auto-scroll
+    }
+</script>
+</body>
+</html>
