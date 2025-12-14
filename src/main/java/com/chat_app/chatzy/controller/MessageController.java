@@ -4,10 +4,7 @@ import com.chat_app.chatzy.dto.MessageDTO;
 import com.chat_app.chatzy.model.Message;
 import com.chat_app.chatzy.service.MessageService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,12 +18,12 @@ public class MessageController {
     }
 
     @GetMapping("/api/messages")
-    public List<MessageDTO> getMessages(){
-        return messageService.getMessages();
+    public List<MessageDTO> getMessages(@RequestParam long senderID,@RequestParam long receiverID){
+    return messageService.getMessages(senderID,receiverID);
     }
 
     @PostMapping("/api/messages")
-    public void sendMessage(@RequestBody Message newMessage){
-        messageService.sendMessage(newMessage);
+    public Message sendMessage(@RequestBody Message newMessage){
+        return messageService.sendMessage(newMessage);
     }
 }

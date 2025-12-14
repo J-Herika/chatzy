@@ -10,6 +10,7 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private long senderID;
     private long receiverID;
     private String message;
@@ -34,4 +35,7 @@ public class Message {
 
     public long getSenderID(){ return this.senderID;}
     public long getId() {return this.id;}
+
+    public long getReceiverID() {return receiverID;}
+    public void setReceiverID(long receiverID) {this.receiverID = receiverID;}
 }

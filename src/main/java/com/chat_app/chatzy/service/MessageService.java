@@ -21,19 +21,25 @@ public class MessageService {
         this.userRepo = userRepo;
     }
 
-//    Messages API functions
-    public List<MessageDTO> getMessages(){
-        return messageRepo.findAll().stream().
-                map( message -> new MessageDTO(message.getId(), message.getMessage(),message.getSenderID())).toList();
+    public List<Message> getFilteredMessage(long senderID,long receiverID){
+        return  messageRepo.findBySenderIDAndReceiverIDOrSenderIDAndReceiverIDOrderByTimeStampAsc(senderID,receiverID,receiverID,senderID);
     }
 
-    public void sendMessage(@RequestBody Message message){
-        if(message.getMessage() == null || !message.getMessage().trim().isEmpty()){
+//    Messages API functions
+    public List<MessageDTO> getMessages(long senderID, long recevierID){
+        List<Message> allMessages = getFilteredMessage(senderID,recevierID);
+        return allMessages.stream().
+                map( message ->
+                        new MessageDTO(message.getId(), message.getMessage(),message.getSenderID(), message.getReceiverID())).toList();
+    }
+
+    public Message sendMessage(@RequestBody Message message){
+        if(message.getMessage() == null || message.getMessage().trim().isEmpty()){
             throw new IllegalArgumentException("You cant send an empty message.");
         } else if (!userRepo.existsById(message.getSenderID())) {
             throw new IllegalArgumentException("username not found please create one.");
         }
-        messageRepo.save(message);
+        return messageRepo.save(message);
     }
 
 
