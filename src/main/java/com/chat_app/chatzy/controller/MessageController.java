@@ -3,7 +3,6 @@ package com.chat_app.chatzy.controller;
 import com.chat_app.chatzy.dto.MessageDTO;
 import com.chat_app.chatzy.model.Message;
 import com.chat_app.chatzy.service.MessageService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +17,8 @@ public class MessageController {
     }
 
     @GetMapping("/api/messages")
-    public List<MessageDTO> getMessages(@RequestParam long senderID,@RequestParam long receiverID){
-    return messageService.getMessages(senderID,receiverID);
+    public List<MessageDTO> getMessages(@RequestParam long senderId,@RequestParam long receiverId){
+    return messageService.getMessages(senderId,receiverId);
     }
 
     @PostMapping("/api/messages")

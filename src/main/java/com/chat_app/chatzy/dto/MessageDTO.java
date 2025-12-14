@@ -1,4 +1,4 @@
 package com.chat_app.chatzy.dto;
 
-public record MessageDTO(long id, String message,long senderID,long receiverID) {
+public record MessageDTO(long id, String message,long senderId,long receiverId) {
 }

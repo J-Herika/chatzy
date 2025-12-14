@@ -5,7 +5,6 @@ import com.chat_app.chatzy.model.Message;
 import com.chat_app.chatzy.repository.MessageRepository;
 import com.chat_app.chatzy.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -21,22 +20,22 @@ public class MessageService {
         this.userRepo = userRepo;
     }
 
-    public List<Message> getFilteredMessage(long senderID,long receiverID){
-        return  messageRepo.findBySenderIDAndReceiverIDOrSenderIDAndReceiverIDOrderByTimeStampAsc(senderID,receiverID,receiverID,senderID);
+    public List<Message> getFilteredMessage(long senderId,long receiverId){
+        return  messageRepo.findBySenderIdAndReceiverIdOrSenderIdAndReceiverIdOrderByTimeStampAsc(senderId,receiverId,receiverId,senderId);
     }
 
 //    Messages API functions
-    public List<MessageDTO> getMessages(long senderID, long recevierID){
-        List<Message> allMessages = getFilteredMessage(senderID,recevierID);
+    public List<MessageDTO> getMessages(long senderID, long recevierid){
+        List<Message> allMessages = getFilteredMessage(senderID,recevierid);
         return allMessages.stream().
                 map( message ->
-                        new MessageDTO(message.getId(), message.getMessage(),message.getSenderID(), message.getReceiverID())).toList();
+                        new MessageDTO(message.getId(), message.getMessage(),message.getSenderId(), message.getReceiverId())).toList();
     }
 
-    public Message sendMessage(@RequestBody Message message){
+    public Message sendMessage(Message message){
         if(message.getMessage() == null || message.getMessage().trim().isEmpty()){
             throw new IllegalArgumentException("You cant send an empty message.");
-        } else if (!userRepo.existsById(message.getSenderID())) {
+        } else if (!userRepo.existsById(message.getSenderId())) {
             throw new IllegalArgumentException("username not found please create one.");
         }
         return messageRepo.save(message);

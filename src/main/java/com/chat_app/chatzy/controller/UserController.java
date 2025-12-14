@@ -19,7 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/api/signin")
+    @GetMapping("/api/users")
     public List<UserDTO> getUsers(){
         return userService.getUsers();
     }

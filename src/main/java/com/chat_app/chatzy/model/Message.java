@@ -11,17 +11,17 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private long senderID;
-    private long receiverID;
+    private long senderId;
+    private long receiverId;
     private String message;
     private LocalDateTime timeStamp;
 
     public Message() {}
 
-    public Message(String message,long senderID,long receiverID){
+    public Message(String message,long senderId,long receiverId){
         this.message = message;
-        this.senderID = senderID;
-        this.receiverID = receiverID;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
     }
 
     @PrePersist
@@ -33,9 +33,9 @@ public class Message {
     public String getMessage() {return this.message;}
     public void setMessage(String message) {this.message = message;}
 
-    public long getSenderID(){ return this.senderID;}
+    public long getSenderId(){ return this.senderId;}
     public long getId() {return this.id;}
 
-    public long getReceiverID() {return receiverID;}
-    public void setReceiverID(long receiverID) {this.receiverID = receiverID;}
+    public long getReceiverId() {return receiverId;}
+    public void setReceiverId(long receiverID) {this.receiverId = receiverID;}
 }
