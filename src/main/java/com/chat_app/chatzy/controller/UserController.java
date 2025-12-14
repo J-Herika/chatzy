@@ -6,23 +6,25 @@ import com.chat_app.chatzy.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RestController
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService){
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/api/signin")
     public List<UserDTO> getUsers(){
         return userService.getUsers();
     }
 
-    @PostMapping
+    @PostMapping("/api/signin")
     public UserDTO createUser(@RequestBody User newUser){
         return userService.createUser(newUser);
     }
