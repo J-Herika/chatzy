@@ -27,7 +27,7 @@ public class MessageService {
                 map( message -> new MessageDTO(message.getId(), message.getMessage(),message.getSenderID())).toList();
     }
 
-    public void sendMessage( Message message){
+    public void sendMessage(@RequestBody Message message){
         if(message.getMessage() == null || !message.getMessage().trim().isEmpty()){
             throw new IllegalArgumentException("You cant send an empty message.");
         } else if (!userRepo.existsById(message.getSenderID())) {

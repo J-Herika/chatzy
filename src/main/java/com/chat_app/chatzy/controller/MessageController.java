@@ -7,25 +7,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class MessageController {
 
-    private final MessageService messageService;
+    private MessageService messageService;
 
     public MessageController(MessageService messageService){
         this.messageService = messageService;
     }
 
-    @GetMapping("/api/messages")
+    @GetMapping
     public List<MessageDTO> getMessages(){
         return messageService.getMessages();
     }
 
-    @PostMapping("/api/messages")
+    @PostMapping
     public void sendMessage(@RequestBody Message newMessage){
         messageService.sendMessage(newMessage);
     }
