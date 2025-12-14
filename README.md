@@ -26,6 +26,7 @@ This is my second Spring Boot project, built to understand how backends handle r
 📝 Developer's Journey
 
 This project was a significant learning curve compared to my first one. It taught me important lessons about scoping and system complexity.
+
 💡 Challenges & Learnings
 
     Spring & JPA: Moving from raw SQL to Spring’s annotations (@) and "magic" JpaRepository methods was confusing at first, but I eventually realized how much development time they save.
